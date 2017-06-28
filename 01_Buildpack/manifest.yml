@@ -1,0 +1,5 @@
+---
+applications:
+- name: R-hello-world
+  buildpack: r-buildpack
+  command: Rscript hello_world.R
