@@ -1,5 +1,5 @@
-library(ggplot2)
 library(rpart)
+
 
 #curl "http://localhost:8080"
 #* @get /
@@ -7,20 +7,6 @@ library(rpart)
 hello <- function() {
     message <- list(Message = "Hello World")
     return(message)
-}
-
-
-#* @get /kmeans
-#* @png
-run_kmeans <- function() {
-    raw_data <- iris
-    data <- as.data.frame(scale(raw_data[, 1:4]))
-
-    result <- kmeans(data, 3)
-    raw_data$kmeans_result <- as.character(result$cluster)
-
-    plot <- ggplot(raw_data, aes_string("Sepal.Length", "Petal.Length", col = "kmeans_result")) + geom_point()
-    plot(plot)
 }
 
 
@@ -47,10 +33,23 @@ decision_tree_train <- function() {
 }
 
 
+#* @get /decision_tree_model
+#* @png
+decision_tree_model <- function() {
+    if(file.exists("dtree_model.rda")) {
+        load("dtree_model.rda")
+        plot(dtree_model)
+        text(dtree_model)
+    }else {
+        return(list(Error = "No model exists"))
+    }
+}
+
+
 #curl -X POST -d '{"data": {"Sepal.Length": 5.9, "Sepal.Width": 3.0, "Petal.Length": 5.1, "Petal.Width": 1.8}}' 'http://localhost:8080/decision_tree_predict'
 #* @post /decision_tree_predict
 #* @serializer unboxedJSON
-decision_tree_predict <- function(data = NULL) {
+decision_tree_predict <- function(data) {
     if(file.exists("dtree_model.rda")) {
         load("dtree_model.rda")
         result <- predict(dtree_model, data, type = "class")

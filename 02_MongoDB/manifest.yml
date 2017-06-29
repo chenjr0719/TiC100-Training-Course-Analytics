@@ -1,0 +1,7 @@
+---
+applications:
+- name: R-mongo-example
+  buildpack: r-buildpack
+  command: Rscript mongo_example.R
+  services:
+  - mongodb

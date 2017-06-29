@@ -21,4 +21,3 @@ Teaching materials of TiC100 training course
 
 ### Conclusion, Q & A
 * 5min
-

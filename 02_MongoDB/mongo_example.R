@@ -4,11 +4,14 @@ library(mongolite)
 
 main <- function() {
 
-    # Connect to MongoDB
+    # Connect to MongoDB of localhost
+    mongo_uri <- 'mongodb://localhost:27017/test'
+
+    # Connect to MongoDB on WISE-PaaS
     vcap_services <- Sys.getenv("VCAP_SERVICES")
     vcap_services <- fromJSON(vcap_services)
 
-    mongo_uri <- vcap_services[[service]]$credentials$uri
+    mongo_uri <- vcap_services$mongodb$credentials$uri
 
     coll_name <- "Test"
     coll <- mongo(coll_name, url = mongo_uri)
