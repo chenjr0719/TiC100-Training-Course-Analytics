@@ -1,0 +1,6 @@
+---
+applications:
+- name: R-hello-world
+  buildpack: r-buildpack
+  command: Rscript plumber.R
+  random-route: true
